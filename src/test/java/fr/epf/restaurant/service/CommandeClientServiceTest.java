@@ -60,7 +60,8 @@ class CommandeClientServiceTest {
 
     @Test
     void testStockCommande() {
-        // creer une enorme commande, résultat attendue : erreur stock insuffisant 
+        //creer une enorme commande,
+        //résultat attendue : erreur stock insuffisant
         CreerCommandeClientRequest.LigneCommandeClient ligneEnorme = new CreerCommandeClientRequest.LigneCommandeClient(
                 1L, 1000);
 
@@ -77,7 +78,8 @@ class CommandeClientServiceTest {
 
     @Test
     void testIngredientsStockStatus() {
-        // changer le stock d'oeuf à stockActuel < seuilAlerte, résultat attendu : oeuf en alerte et lait sans alerte (quantité suffisante)
+        // changer le stock d'oeuf à stockActuel < seuilAlerte,
+        // résultat attendu : oeuf en alerte et lait sans alerte (quantité suffisante)
         Ingredient oeufs = ingredientDao.findById(2L);
         oeufs.setStockActuel(1); // forcer l'ajout d'oeufs dans la liste d'alerte
         ingredientDao.update(oeufs);
@@ -98,7 +100,8 @@ class CommandeClientServiceTest {
 
     @Test
     void testMiseAJourStock() {
-        // creer une commandeFournisseur (ajouter des ingrédient au stock), résultat attendu : stock de l'ingredient qu'on commande augmente
+        // creer une commandeFournisseur,
+        // résultat attendu : stock de l'ingredient qu'on commande augmente
         double ingredientAvantCommande = ingredientDao.findById(1L).getStockActuel();
         CreerCommandeFournisseurRequest.LigneCommandeFournisseur ligneCommandeFournisseur =
         new CreerCommandeFournisseurRequest.LigneCommandeFournisseur(
@@ -121,7 +124,8 @@ class CommandeClientServiceTest {
 
     @Test
     void testRecommandationCommande() {
-        // Tester la Recommandation d'une commande, résultat attendu : recommandation fournisseur moins cher + quantité = 2*(seuil-1)
+        // Tester la Recommandation d'une commande
+        // résultat attendu : recommandation fournisseur moins cher + quantité = 2*(seuil-1)
         Ingredient oeufs = ingredientDao.findById(2L);
         double seuil = oeufs.getSeuilAlerte();
 
@@ -159,7 +163,8 @@ class CommandeClientServiceTest {
 
     @Test
     void testIngredientExactementAuSeuil() {
-        //tester un ingredient : stock_actuel=seuil_alerte, résultat attendu: alerte ne doit pas être présente dans la liste des alertes
+        //tester un ingredient : stock_actuel=seuil_alerte
+        // résultat attendu: alerte ne doit pas être présente dans la liste des alertes
         Ingredient ingredient = ingredientDao.findById(2L);
 
         ingredient.setStockActuel(ingredient.getSeuilAlerte());
@@ -208,5 +213,4 @@ class CommandeClientServiceTest {
             commandeClientService.preparer(commande.getId());
         });
     }
-    
 }
